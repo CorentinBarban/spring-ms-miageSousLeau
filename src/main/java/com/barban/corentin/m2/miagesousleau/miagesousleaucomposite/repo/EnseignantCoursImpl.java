@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class EnseignantCoursImpl implements EnseignantCoursRepository{
 
     Logger logger = LoggerFactory.getLogger(EnseignantCoursImpl.class);
@@ -37,13 +40,16 @@ public class EnseignantCoursImpl implements EnseignantCoursRepository{
         logger.info("Réponse enseignant reçue : {}", e);
 
         logger.info("Envoi de la demande au service cours");
-        Cours[] listeCours = restTemplateCours.getForObject(this.serviceUrlCours+"?user={id}",Cours.class, idEnseignant);
+        Cours[] listeCours = restTemplateCours.getForObject(this.serviceUrlCours+"?enseignant={id}", Cours[].class, idEnseignant);
 
         EnseignantWithCours ewc = new EnseignantWithCours();
         ewc.setIdEnseignant(e.idEnseignant);
         ewc.setNom(e.nom);
         ewc.setPrenom(e.prenom);
-        ewc.setAdresseMail(e.getAdresseMail());
-        return null;
+        ewc.setDateCertificat(e.getDateCertificat());
+        ewc.setNiveauPlonge(e.getNiveauPlonge());
+        ewc.setNumLicence(e.getNumLicence());
+        ewc.setListeCoursEnseignant(new ArrayList<Cours>(Arrays.asList(listeCours)));
+        return ewc;
     }
 }

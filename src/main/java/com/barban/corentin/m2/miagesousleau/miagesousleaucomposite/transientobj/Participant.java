@@ -18,14 +18,6 @@ public class Participant implements Serializable {
 
     public String prenom;
 
-    private String adresseMail;
-
-    private String login;
-
-    private String villeResidence;
-
-    private String paysResidence;
-
     private Date dateCertificat;
 
     private int niveauPlonge;

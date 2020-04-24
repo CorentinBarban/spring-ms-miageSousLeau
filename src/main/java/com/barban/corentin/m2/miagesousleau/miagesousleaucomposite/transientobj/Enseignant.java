@@ -18,19 +18,10 @@ public class Enseignant implements Serializable {
 
     public String prenom;
 
-    private String adresseMail;
-
-    private String login;
-
-    private String villeResidence;
-
-    private String paysResidence;
-
     private Date dateCertificat;
 
     private int niveauPlonge;
 
     private String numLicence;
-
 
 }
