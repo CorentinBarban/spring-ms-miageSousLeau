@@ -6,7 +6,6 @@ import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -17,11 +16,9 @@ public class EnseignantCoursImpl implements EnseignantCoursRepository{
     Logger logger = LoggerFactory.getLogger(EnseignantCoursImpl.class);
 
     @Autowired
-    @LoadBalanced
     protected RestTemplate restTemplateUser;
 
     @Autowired
-    @LoadBalanced
     protected RestTemplate restTemplateCours;
 
     protected String serviceUrlUser;

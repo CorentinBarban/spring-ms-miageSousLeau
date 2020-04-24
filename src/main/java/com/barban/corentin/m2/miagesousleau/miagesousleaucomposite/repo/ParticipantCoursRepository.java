@@ -1,6 +1,8 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo;
 
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Cours;
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.CoursNotFoundException;
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.InscriptionException;
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.MembreNotFoundException;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Participant;
 
 public interface ParticipantCoursRepository {
@@ -17,5 +19,5 @@ public interface ParticipantCoursRepository {
      * @param idCours
      * @return
      */
-    Cours inscriptionCoursParticipant(Long idParticipant, Long idCours);
+    Boolean inscriptionCoursParticipant(Long idParticipant, Long idCours) throws MembreNotFoundException, CoursNotFoundException, InscriptionException;
 }

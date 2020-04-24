@@ -7,4 +7,4 @@ spring:
 #    serviceUrl:
 #      defaultZone: http://localhost:1111/eureka/
 server:
-  port: 2000
+  port: 8090

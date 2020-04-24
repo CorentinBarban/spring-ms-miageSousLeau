@@ -1,15 +1,17 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.rest;
 
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.CoursNotFoundException;
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.MembreNotFoundException;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo.ParticipantCoursRepository;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Cours;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-@RestController("/participants")
+@RestController
+@RequestMapping("/participants")
 public class ParticipantController {
 
     @Autowired
@@ -29,7 +31,12 @@ public class ParticipantController {
 
     @PostMapping("/{idParticipant}/inscription/{idCours}")
     public Cours inscriptionCoursParticipant(@PathVariable("idParticipant") Long idParticipant,@PathVariable("idCours") Long idCours) {
-        return this.participantCoursRepository.inscriptionCoursParticipant(idParticipant,idCours);
+        try {
+            return this.participantCoursRepository.inscriptionCoursParticipant(idParticipant,idCours);
+        } catch (MembreNotFoundException | CoursNotFoundException | InscriptionException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
 }

@@ -6,7 +6,6 @@ import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo.Particip
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo.ParticipantCoursRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,7 +21,6 @@ public class MiagesousleaucompositeApplication {
 	}
 
 	@Bean
-	@LoadBalanced
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
