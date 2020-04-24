@@ -13,7 +13,7 @@ public class EnseignantController {
     @Autowired
     EnseignantCoursRepository enseignantCoursRepository;
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Enseignant getEnseignant(@PathVariable("id") Long id) {
         return enseignantCoursRepository.getEnseignantWithCours(id);
     }

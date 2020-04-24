@@ -52,4 +52,16 @@ public class ParticipantCoursImpl implements ParticipantCoursRepository{
         pwc.setListeCoursParticipant(new ArrayList<Cours>(Arrays.asList(listeCours)));
         return pwc;
     }
+
+    /**
+     * Inscription d'un membre à un cours
+     *
+     * @param idParticipant
+     * @param idCours
+     * @return
+     */
+    @Override
+    public Cours inscriptionCoursParticipant(Long idParticipant, Long idCours) {
+       return null;
+    }
 }

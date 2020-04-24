@@ -1,5 +1,6 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo;
 
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Cours;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Participant;
 
 public interface ParticipantCoursRepository {
@@ -10,5 +11,11 @@ public interface ParticipantCoursRepository {
      */
     Participant getParticipantWithCours(Long idParticipant);
 
-    //S'inscrire à un cours
+    /**
+     * Inscription d'un membre à un cours
+     * @param idParticipant
+     * @param idCours
+     * @return
+     */
+    Cours inscriptionCoursParticipant(Long idParticipant, Long idCours);
 }
