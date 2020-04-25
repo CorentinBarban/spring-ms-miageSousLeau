@@ -87,7 +87,7 @@ public class ParticipantCoursImpl implements ParticipantCoursRepository {
             restTemplateCours.put(this.serviceUrlCours + "/cours/{idCours}/inscriptions?participant={id}", Cours.class, idCours, idParticipant);
 
         } else {
-            throw new InscriptionException("Les conditions n'inscription ne sont pas respectées !");
+            throw new InscriptionException("Les conditions d'inscription ne sont pas respectées !");
         }
 
         return true;

@@ -15,7 +15,17 @@ public class Cours {
 
     public Long idCours;
 
+    private String nom;
+
     public int niveauCible;
 
     public Date date;
+
+    private String creneau;
+
+    private long duree;
+
+    private Long idEnseignant;
+
+    //Piscine ?
 }
