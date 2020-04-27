@@ -37,11 +37,11 @@ public class ParticipantCoursImpl implements ParticipantCoursRepository {
     @Override
     public Participant getParticipantWithCours(Long idParticipant) {
         logger.info("Envoi de la demande au service enseignant");
-        Participant p = restTemplateUser.getForObject(this.serviceUrlUser + "/{id}", Participant.class, idParticipant);
+        Participant p = restTemplateUser.getForObject(this.serviceUrlUser + "membres/{id}", Participant.class, idParticipant);
         logger.info("Réponse enseignant reçue : {}", p);
 
         logger.info("Envoi de la demande au service cours");
-        Cours[] listeCours = restTemplateCours.getForObject(this.serviceUrlCours + "?participant={id}", Cours[].class, idParticipant);
+        Cours[] listeCours = restTemplateCours.getForObject(this.serviceUrlCours + "/cours/participant?participant={id}", Cours[].class, Long.toString(idParticipant));
 
         ParticipantWithCours pwc = new ParticipantWithCours();
         pwc.setIdParticipant(p.idParticipant);
@@ -69,14 +69,14 @@ public class ParticipantCoursImpl implements ParticipantCoursRepository {
 
         logger.info("Envoi de la demande d'existence du participant");
         try {
-            participant = restTemplateUser.getForObject(this.serviceUrlUser + "/membres/{id}", Participant.class, idParticipant);
+            participant = restTemplateUser.getForObject(this.serviceUrlUser + "membres/{id}", Participant.class, idParticipant);
             logger.info("Réponse participant reçue : {}", participant);
         } catch (HttpClientErrorException e) {
             throw new MembreNotFoundException("Le membre n'existe pas");
         }
         try {
             logger.info("Envoi de la demande d'existence du cours");
-            cours = restTemplateCours.getForObject(this.serviceUrlCours + "/cours/{id}", Cours.class, idCours);
+            cours = restTemplateCours.getForObject(this.serviceUrlCours + "cours/{id}", Cours.class, idCours);
             logger.info("Réponse cours reçue : {}", cours);
         } catch (HttpClientErrorException e) {
             throw new CoursNotFoundException("Le cours n'existe pas");
@@ -84,7 +84,7 @@ public class ParticipantCoursImpl implements ParticipantCoursRepository {
         //Verification des conditions d'inscription
         if ((participant.getNiveauPlonge() >= cours.getNiveauCible())) {
             logger.info("Participation OK");
-            restTemplateCours.put(this.serviceUrlCours + "/cours/{idCours}/inscriptions?participant={id}", Cours.class, idCours, idParticipant);
+            restTemplateCours.put(this.serviceUrlCours + "cours/{idCours}/inscriptions?participant={id}", Cours.class, idCours, idParticipant);
 
         } else {
             throw new InscriptionException("Les conditions d'inscription ne sont pas respectées !");

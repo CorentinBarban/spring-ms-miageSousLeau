@@ -14,6 +14,7 @@ public class MiagesousleaucompositeApplication {
 
 	public static final String USER_SERVICE_URL = "http://localhost:8088/";
 	public static final String COURS_SERVICE_URL = "http://localhost:8089/";
+	public static final String PISCINE_SERVICE_URL = "https://data.toulouse-metropole.fr/api/datasets/1.0/piscines/";
 
 
 	public static void main(String[] args) {
@@ -27,7 +28,7 @@ public class MiagesousleaucompositeApplication {
 
 	@Bean
 	public EnseignantCoursRepository enseignantRepository(){
-		return new EnseignantCoursImpl(USER_SERVICE_URL,COURS_SERVICE_URL);
+		return new EnseignantCoursImpl(USER_SERVICE_URL,COURS_SERVICE_URL,PISCINE_SERVICE_URL);
 	}
 
 	@Bean

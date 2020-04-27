@@ -18,10 +18,10 @@ public class Participant implements Serializable {
 
     public String prenom;
 
-    private Date dateCertificat;
+    public Date dateCertificat;
 
-    private int niveauPlonge;
+    public int niveauPlonge;
 
-    private String numLicence;
+    public String numLicence;
 
 }

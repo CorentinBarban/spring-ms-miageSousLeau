@@ -1,12 +1,8 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo;
 
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.CoursNotFoundException;
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.InscriptionException;
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.MauvaisNiveauException;
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.MembreNotFoundException;
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.*;
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Cours;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Enseignant;
-
-import java.util.Date;
 
 public interface EnseignantCoursRepository {
 
@@ -15,18 +11,18 @@ public interface EnseignantCoursRepository {
      * @param idEnseignant
      * @return
      */
-
-    Enseignant getEnseignantWithCours(Long idEnseignant);
+    Enseignant getEnseignantWithCours(Long idEnseignant) throws PiscineNotFoundException;
 
     /**
      * Création d'un cours par un enseignant
      *
-     * @param idEnseignant
-     * @param idCours
+     * @param cours
      * @return
+     * @throws MembreNotFoundException
+     * @throws MauvaisNiveauException
+     * @throws PiscineNotFoundException
      */
-
-    Boolean creerCoursEnseignant(Long idEnseignant, Long idCours, String nom, int niveauCible, String creneau, Date date, long duree) throws MembreNotFoundException, MauvaisNiveauException;
+    Boolean creerCoursEnseignant(Cours cours) throws MembreNotFoundException, MauvaisNiveauException, PiscineNotFoundException;
 
     //Créer un cours (return Cours) : vérifier que l'enseignant existe dans gestion membres, récupérer ses infos et vérifier s'il a la capacité de créer le cours (niveau), et fait appel à la méthode creerCours dans gestionCours
 }

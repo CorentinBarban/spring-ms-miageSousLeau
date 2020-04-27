@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @AllArgsConstructor
@@ -15,17 +16,19 @@ public class Cours {
 
     public Long idCours;
 
-    private String nom;
+    public String nom;
 
     public int niveauCible;
 
     public Date date;
 
-    private String creneau;
+    public String creneau;
 
-    private long duree;
+    public Long duree;
 
-    private Long idEnseignant;
+    public Long idEnseignant;
 
-    //Piscine ?
+    public String idPiscine;
+
+    public List<Long> listeParticipants;
 }
