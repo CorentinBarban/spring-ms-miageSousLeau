@@ -8,6 +8,7 @@ public interface EnseignantCoursRepository {
 
     /**
      * Obtenir tous les cours d'un enseignant
+     *
      * @param idEnseignant
      * @return
      */
@@ -19,10 +20,10 @@ public interface EnseignantCoursRepository {
      * @param cours
      * @return
      * @throws MembreNotFoundException
-     * @throws MauvaisNiveauException
+     * @throws CreationCoursException
      * @throws PiscineNotFoundException
      */
-    Boolean creerCoursEnseignant(Cours cours) throws MembreNotFoundException, MauvaisNiveauException, PiscineNotFoundException;
+    Boolean creerCoursEnseignant(Cours cours) throws MembreNotFoundException, CreationCoursException, PiscineNotFoundException;
 
     //Créer un cours (return Cours) : vérifier que l'enseignant existe dans gestion membres, récupérer ses infos et vérifier s'il a la capacité de créer le cours (niveau), et fait appel à la méthode creerCours dans gestionCours
 }

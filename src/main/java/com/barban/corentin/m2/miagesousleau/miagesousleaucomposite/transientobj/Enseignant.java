@@ -22,6 +22,8 @@ public class Enseignant implements Serializable {
 
     public int niveauPlonge;
 
+    public String etatAptitude;
+
     public String numLicence;
 
 }

@@ -1,6 +1,6 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions;
 
-public class MembreNotFoundException extends Exception{
+public class MembreNotFoundException extends Exception {
     /**
      * Creates a new instance of <code>MembreNotFoundException</code> without
      * detail message.

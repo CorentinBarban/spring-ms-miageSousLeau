@@ -1,7 +1,7 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo;
 
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.CoursNotFoundException;
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.InscriptionException;
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.InscriptionCoursException;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.MembreNotFoundException;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Cours;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Participant;
@@ -9,6 +9,7 @@ import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,9 +21,11 @@ public class ParticipantCoursImpl implements ParticipantCoursRepository {
     Logger logger = LoggerFactory.getLogger(EnseignantCoursImpl.class);
 
     @Autowired
+    @LoadBalanced
     protected RestTemplate restTemplateUser;
 
     @Autowired
+    @LoadBalanced
     protected RestTemplate restTemplateCours;
 
     protected String serviceUrlUser;
@@ -62,7 +65,7 @@ public class ParticipantCoursImpl implements ParticipantCoursRepository {
      * @return
      */
     @Override
-    public Boolean inscriptionCoursParticipant(Long idParticipant, Long idCours) throws MembreNotFoundException, CoursNotFoundException, InscriptionException {
+    public Boolean inscriptionCoursParticipant(Long idParticipant, Long idCours) throws MembreNotFoundException, CoursNotFoundException, InscriptionCoursException {
         Participant participant;
         Cours cours;
         Boolean isPossible;
@@ -82,12 +85,12 @@ public class ParticipantCoursImpl implements ParticipantCoursRepository {
             throw new CoursNotFoundException("Le cours n'existe pas");
         }
         //Verification des conditions d'inscription
-        if ((participant.getNiveauPlonge() >= cours.getNiveauCible())) {
+        if ((participant.getNiveauPlonge() >= cours.getNiveauCible()) && participant.getEtatAptitude().equals("APTE")) {
             logger.info("Participation OK");
             restTemplateCours.put(this.serviceUrlCours + "cours/{idCours}/inscriptions?participant={id}", Cours.class, idCours, idParticipant);
 
         } else {
-            throw new InscriptionException("Les conditions d'inscription ne sont pas respectées !");
+            throw new InscriptionCoursException("Les conditions d'inscription ne sont pas respectées !");
         }
 
         return true;

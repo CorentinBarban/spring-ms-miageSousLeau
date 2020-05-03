@@ -1,11 +1,11 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions;
 
-public class InscriptionException extends Exception {
+public class InscriptionCoursException extends Exception {
     /**
      * Creates a new instance of <code>InscriptionException</code> without
      * detail message.
      */
-    public InscriptionException() {
+    public InscriptionCoursException() {
     }
 
     /**
@@ -14,7 +14,7 @@ public class InscriptionException extends Exception {
      *
      * @param msg the detail message.
      */
-    public InscriptionException(String msg) {
+    public InscriptionCoursException(String msg) {
         super(msg);
     }
 }

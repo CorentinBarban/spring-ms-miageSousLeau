@@ -22,6 +22,8 @@ public class Participant implements Serializable {
 
     public int niveauPlonge;
 
+    public String etatAptitude;
+
     public String numLicence;
 
 }

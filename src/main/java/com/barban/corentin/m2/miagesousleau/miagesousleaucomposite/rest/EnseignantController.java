@@ -37,7 +37,7 @@ public class EnseignantController {
     public Boolean inscriptionCoursParticipant(@RequestBody Cours cours) {
         try {
             return this.enseignantCoursRepository.creerCoursEnseignant(cours);
-        } catch (MembreNotFoundException | MauvaisNiveauException | PiscineNotFoundException e) {
+        } catch (MembreNotFoundException | CreationCoursException | PiscineNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, e.getMessage(), e);
         }

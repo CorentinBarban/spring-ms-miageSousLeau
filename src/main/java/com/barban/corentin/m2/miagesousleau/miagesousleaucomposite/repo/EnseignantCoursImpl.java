@@ -1,6 +1,6 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo;
 
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.MauvaisNiveauException;
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.CreationCoursException;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.MembreNotFoundException;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions.PiscineNotFoundException;
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.*;
@@ -8,25 +8,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class EnseignantCoursImpl implements EnseignantCoursRepository {
 
     Logger logger = LoggerFactory.getLogger(EnseignantCoursImpl.class);
 
     @Autowired
+    @LoadBalanced
     protected RestTemplate restTemplateUser;
 
     @Autowired
+    @LoadBalanced
     protected RestTemplate restTemplateCours;
 
-    @Autowired
-    protected RestTemplate restTemplatePiscine;
 
     protected String serviceUrlUser;
 
@@ -43,6 +43,7 @@ public class EnseignantCoursImpl implements EnseignantCoursRepository {
 
     @Override
     public Enseignant getEnseignantWithCours(Long idEnseignant) throws PiscineNotFoundException {
+        RestTemplate restTemplatePiscine = new RestTemplate();
         logger.info("Envoi de la demande au service enseignant {}", idEnseignant);
         Enseignant e = restTemplateUser.getForObject(this.serviceUrlUser + "membres/{id}", Enseignant.class, idEnseignant);
         logger.info("Réponse enseignant reçue : {}", e);
@@ -81,8 +82,9 @@ public class EnseignantCoursImpl implements EnseignantCoursRepository {
      * @return
      */
     @Override
-    public Boolean creerCoursEnseignant(Cours cours) throws MembreNotFoundException, MauvaisNiveauException, PiscineNotFoundException {
+    public Boolean creerCoursEnseignant(Cours cours) throws MembreNotFoundException, CreationCoursException, PiscineNotFoundException {
         Enseignant enseignant;
+        RestTemplate restTemplatePiscine = new RestTemplate();
         logger.info("Envoi de la demande d'existence de l'enseignant");
         try {
             enseignant = restTemplateUser.getForObject(this.serviceUrlUser + "membres/enseignants/{id}", Enseignant.class, cours.getIdEnseignant());
@@ -97,11 +99,11 @@ public class EnseignantCoursImpl implements EnseignantCoursRepository {
         } catch (JSONException e) {
             throw new PiscineNotFoundException("La piscine n'existe pas");
         }
-        if (enseignant.getNiveauPlonge() >= cours.getNiveauCible()) {
+        if (enseignant.getNiveauPlonge() >= cours.getNiveauCible() && enseignant.getEtatAptitude().equals("APTE")) {
             logger.info("Niveau cible OK : Création du cours ");
             restTemplateCours.postForObject(this.serviceUrlCours + "cours", cours, Cours.class);
         } else {
-            throw new MauvaisNiveauException("Les conditions de création ne sont pas respectées : le niveau du cours est supérieur au niveau de l'enseignant");
+            throw new CreationCoursException("Les conditions de création ne sont pas respectées");
         }
 
         return true;

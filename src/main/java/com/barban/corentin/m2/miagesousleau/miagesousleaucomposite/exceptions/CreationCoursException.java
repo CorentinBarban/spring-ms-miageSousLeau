@@ -1,12 +1,12 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.exceptions;
 
-public class MauvaisNiveauException extends Exception {
+public class CreationCoursException extends Exception {
 
     /**
      * Creates a new instance of <code>UtilisateurNotFoundException</code> without
      * detail message.
      */
-    public MauvaisNiveauException() {
+    public CreationCoursException() {
     }
 
     /**
@@ -15,7 +15,7 @@ public class MauvaisNiveauException extends Exception {
      *
      * @param msg the detail message.
      */
-    public MauvaisNiveauException(String msg) {
+    public CreationCoursException(String msg) {
         super(msg);
     }
 
