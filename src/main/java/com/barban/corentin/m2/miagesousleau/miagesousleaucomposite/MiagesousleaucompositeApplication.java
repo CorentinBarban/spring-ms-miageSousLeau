@@ -1,9 +1,6 @@
 package com.barban.corentin.m2.miagesousleau.miagesousleaucomposite;
 
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo.EnseignantCoursImpl;
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo.EnseignantCoursRepository;
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo.ParticipantCoursImpl;
-import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo.ParticipantCoursRepository;
+import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -39,5 +36,10 @@ public class MiagesousleaucompositeApplication {
     @Bean
     public ParticipantCoursRepository participantRepository() {
         return new ParticipantCoursImpl(USER_SERVICE_URL, COURS_SERVICE_URL);
+    }
+
+    @Bean
+    public PresidentCoursRepository presidentCoursRepository() {
+        return new PresidentCoursImpl(USER_SERVICE_URL, COURS_SERVICE_URL);
     }
 }
