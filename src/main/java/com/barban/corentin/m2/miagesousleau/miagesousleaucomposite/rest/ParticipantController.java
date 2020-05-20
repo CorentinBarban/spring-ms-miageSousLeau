@@ -7,6 +7,7 @@ import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.repo.Particip
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -36,6 +37,7 @@ public class ParticipantController {
      * @param idCours
      * @return
      */
+    @PreAuthorize("#oauth2.hasScope('write') and hasRole('ROLE_ADHERENT') or hasRole('ROLE_ENSEIGNANT')")
     @PostMapping("/{idParticipant}/inscription/{idCours}")
     public Boolean inscriptionCoursParticipant(@PathVariable("idParticipant") Long idParticipant, @PathVariable("idCours") Long idCours) {
         try {

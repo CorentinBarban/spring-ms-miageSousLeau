@@ -6,6 +6,7 @@ import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.
 import com.barban.corentin.m2.miagesousleau.miagesousleaucomposite.transientobj.Enseignant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,9 +33,9 @@ public class EnseignantController {
         }
     }
 
-
+    @PreAuthorize("#oauth2.hasScope('write') and hasRole('ROLE_ENSEIGNANT')")
     @PostMapping("/cours")
-    public Boolean inscriptionCoursParticipant(@RequestBody Cours cours) {
+    public Boolean creationCoursEnseignant(@RequestBody Cours cours) {
         try {
             return this.enseignantCoursRepository.creerCoursEnseignant(cours);
         } catch (MembreNotFoundException | CreationCoursException | PiscineNotFoundException e) {

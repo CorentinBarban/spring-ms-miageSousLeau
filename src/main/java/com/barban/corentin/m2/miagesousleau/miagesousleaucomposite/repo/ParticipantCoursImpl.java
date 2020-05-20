@@ -68,8 +68,7 @@ public class ParticipantCoursImpl implements ParticipantCoursRepository {
     public Boolean inscriptionCoursParticipant(Long idParticipant, Long idCours) throws MembreNotFoundException, CoursNotFoundException, InscriptionCoursException {
         Participant participant;
         Cours cours;
-        Boolean isPossible;
-
+        
         logger.info("Envoi de la demande d'existence du participant");
         try {
             participant = restTemplateUser.getForObject(this.serviceUrlUser + "membres/{id}", Participant.class, idParticipant);
