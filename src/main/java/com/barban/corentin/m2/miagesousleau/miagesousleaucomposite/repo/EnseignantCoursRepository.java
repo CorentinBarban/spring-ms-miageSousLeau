@@ -25,5 +25,4 @@ public interface EnseignantCoursRepository {
      */
     Boolean creerCoursEnseignant(Cours cours) throws MembreNotFoundException, CreationCoursException, PiscineNotFoundException;
 
-    //Créer un cours (return Cours) : vérifier que l'enseignant existe dans gestion membres, récupérer ses infos et vérifier s'il a la capacité de créer le cours (niveau), et fait appel à la méthode creerCours dans gestionCours
 }
